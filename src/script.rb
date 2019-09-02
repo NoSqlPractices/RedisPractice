@@ -1,6 +1,7 @@
 require "redis"
 require "../src/Movie"
 require "../src/User"
+require "../src/Comment"
 
 ARGV.each do|a|
   redis = Redis.new
@@ -25,5 +26,14 @@ ARGV.each do|a|
 
     redis.set("movie:#{movie.id}", movie.to_json)
     puts redis.mget("movie:#{movie.id}")
+  when "3"
+    comment = Comment.new(
+        user_id: 0,
+        movie_id: 0,
+        text: "Best movie ever"
+    )
+
+    redis.set("comment:#{comment.id}", comment.to_json)
+    puts redis.mget("comment:#{comment.id}")
   end
 end
