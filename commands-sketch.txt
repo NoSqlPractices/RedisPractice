@@ -1,0 +1,47 @@
+HMSET movies:1 name "Terminator1" comments_count 3
+HMSET users:1 name "Terminator1" password: "password"
+HMSET comments:1 name "text" user_id 1 movie_id 1
+
+I.On Create User
+
+    HMSET users:1 name "Terminator1" password: "password"
+    SADD users:emails "user@email.com"
+
+II.On Create Movie
+
+    HMSET movies:1 name "Terminator1" comments_count 0
+    ZADD movies:release_date 1389772800 "1"
+
+
+III.On Create Comment
+
+    HMSET comments:1 name "text" user_id 1 movie_id 1
+    LPUSH movies:1:users 1
+    SADD comments:movies 1
+
+    ## falta incrementar la cantidad de comentarios en el hash de la pelicula (usando INCR)
+    HSET myhash comments_count 2
+
+IV. Conocer los títulos de las 10 películas más viejas.
+
+    ZRANGE movies:release_date 0 9 ó ZRANGE movies:release_date -1 -10
+
+V. Conocer los ids de los últimos 3 usuarios que comentaron una película (puede ser el
+mismo varias veces, no tienen que ser usuarios diferentes).
+
+    LRANGE movies:1:users 0 2
+
+VI. Conocer la cantidad de películas que tienen al menos un comentario.
+
+    LRANGE comments:movies 0 -1
+
+VII. Conocer la cantidad de comentarios que tiene una película determinada, dado su
+ID.
+
+    HGET movies:1 comments_count
+
+VIII. Obtener todos los mails de los usuarios (sin repeticiones) registrados, con el
+objetivo de poder enviarles notificaciones en un futuro de películas que puedan
+interesarle.
+
+    LRANGE users:emails 0 -1

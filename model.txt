@@ -33,7 +33,7 @@ Conocer la cantidad de películas que tienen al menos un comentario.
   => comments:movies => Set<id>
 
 Conocer la cantidad de comentarios que tiene una película determinada, dado su ID.
-  => movies:id:comments => Set<id>
+  => movies:id => Hash<>
 
 VIII.
   => users:emails => Set<string>
