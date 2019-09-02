@@ -4,7 +4,7 @@ class Comment < JSONable
 
   @@autogeneration = 0
 
-  attr_accessor :id
+  attr_reader :id
 
   def initialize(attrs)
     @id = @@autogeneration

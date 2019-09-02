@@ -21,11 +21,11 @@ ARGV.each do|a|
     movie = Movie.new(
         name: "harry potter",
         director: "john",
-        released_date: 20190813
+        released_date: 20190813,
+        redis: redis
     )
 
-    redis.set("movie:#{movie.id}", movie.to_json)
-    puts redis.mget("movie:#{movie.id}")
+    puts redis.hgetall("movie:#{movie.id}")
   when "3"
     comment = Comment.new(
         user_id: 0,
@@ -35,5 +35,17 @@ ARGV.each do|a|
 
     redis.set("comment:#{comment.id}", comment.to_json)
     puts redis.mget("comment:#{comment.id}")
+  when "4"
+    Movie.generate_movies(redis)
+
+    list = redis.zrevrange("movies", 0, 9)
+    list_keys = list.map { |id| "movie:#{id}" }
+
+    for i in 0..list_keys.size
+      puts redis.hget(list_keys[i], "title")
+    end
+  when "5"
+
+    
   end
 end
