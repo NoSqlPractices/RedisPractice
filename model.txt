@@ -1,0 +1,40 @@
+I. Crear un nuevo usuario.
+II. Crear una nueva película.
+III. Crear un nuevo comentario.
+IV. Conocer los títulos de las 10 películas más viejas.
+V. Conocer los ids de los últimos 3 usuarios que comentaron una película (puede ser el
+mismo varias veces, no tienen que ser usuarios diferentes).
+VI. Conocer la cantidad de películas que tienen al menos un comentario.
+VII. Conocer la cantidad de comentarios que tiene una película determinada, dado su
+ID.
+VIII. Obtener todos los mails de los usuarios (sin repeticiones) registrados, con el
+objetivo de poder enviarles notificaciones en un futuro de películas que puedan
+interesarle.
+
+
+key space
+
+  users:id      => Hash
+  comments:id   => Hash
+  movies:id     => Hash
+
+No es necesario que sean hashes, pero si quisieran hacer queries del estilo:
+ "obtener email de un usurio especifico" esto es necesario. De otra manera podrian ser solo ids.
+
+Conocer los títulos de las 10 películas más viejas.
+  => movies:release_date Sorted Set<date, id>
+  ej => ZADD movies:release_date 1389772800 "1"
+
+Conocer los ids de los últimos 3 usuarios que comentaron una película (puede ser el
+mismo varias veces, no tienen que ser usuarios diferentes).
+  => movies:id:users List<id>
+
+Conocer la cantidad de películas que tienen al menos un comentario.
+  => comments:movies => Set<id>
+
+Conocer la cantidad de comentarios que tiene una película determinada, dado su ID.
+  => movies:id:comments => Set<id>
+
+VIII.
+  => users:emails => Set<string>
+
