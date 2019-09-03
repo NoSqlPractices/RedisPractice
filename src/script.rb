@@ -5,7 +5,6 @@ require "../src/Comment"
 
 ARGV.each do|a|
   redis = Redis.new
-
   case a
   when "1"
     user = User.new(
@@ -36,8 +35,6 @@ ARGV.each do|a|
 
     puts redis.hgetall("comment:#{comment.id}")
   when "4"
-    Movie.generate_movies(redis)
-
     list = redis.zrange("movies", 0, 9)
     list_keys = list.map { |id| "movie:#{id}" }
 
@@ -45,8 +42,6 @@ ARGV.each do|a|
        puts redis.hget(list_keys[i], "title")
     end
   when "5"
-    Comment.generate_comments(redis)
-
     puts redis.lrange("movie:2:users", 0, 2)
   when "6"
     puts redis.scard("movies_with_comments")

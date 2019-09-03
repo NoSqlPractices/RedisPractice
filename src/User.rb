@@ -21,5 +21,4 @@ class User
 
     @@autogeneration = @@autogeneration + 1
   end
-
 end
