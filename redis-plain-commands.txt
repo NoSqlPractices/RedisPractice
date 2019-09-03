@@ -7,37 +7,37 @@ I.On Create User
 II.On Create Movie
     MULTI
     HMSET movie:1 title "Terminator1" director "james cameron" released_date 19841026 comments_quantity 0
-    ZADD movies_by_release 19841026 "Terminator1"
+    ZADD movies:titleByReleasedDate 19841026 "Terminator1"
     EXEC
 
 III.On Create Comment
     MULTI
-    HMSET comment:1 user_id 1 movie_id 1 text "awesome"
-    LPUSH movie:1:users_comments 1
-    SADD movies_with_comments 1
+    HMSET comment:1 movie_id 1 user_id 1 text "awesome"
+    LPUSH comments:movie:1:users 1
+    SADD comments:movies 1
     HINCRBY movie:1 comments_quantity 1
     EXEC
 
 IV. Conocer los títulos de las 10 películas más viejas.
 
-    ZRANGE movies:release_date 0 9
+    ZRANGE movies:titleByReleasedDate 0 9
 
 V. Conocer los ids de los últimos 3 usuarios que comentaron una película (puede ser el
 mismo varias veces, no tienen que ser usuarios diferentes).
 
-    LRANGE movie:1:users 0 2
+    LRANGE comments:movie:2:users 0 2
 
 VI. Conocer la cantidad de películas que tienen al menos un comentario.
 
-    LRANGE comments:movies 0 -1
+    SCARD comments:movies
 
 VII. Conocer la cantidad de comentarios que tiene una película determinada, dado su
 ID.
 
-    HGET movies:1 comments_count
+    HGET movie:1 comments_quantity
 
 VIII. Obtener todos los mails de los usuarios (sin repeticiones) registrados, con el
 objetivo de poder enviarles notificaciones en un futuro de películas que puedan
 interesarle.
 
-    LRANGE users:emails 0 -1
+    SMEMBERS users:emails
