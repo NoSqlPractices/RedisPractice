@@ -48,5 +48,7 @@ ARGV.each do|a|
     Comment.generate_comments(redis)
 
     puts redis.lrange("user_comments_by_movies:2", 0, 2)
+  when "7"
+    puts redis.hget("movie:2", "comments_quantity")
   end
 end
