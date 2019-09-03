@@ -12,11 +12,11 @@ ARGV.each do|a|
         password: "hola",
         name: "john",
         surname: "johnson",
-        mail: "john@gmail.com"
+        mail: "john@gmail.com",
+        redis: redis
     )
 
-    redis.set("user:#{user.id}", user.to_json)
-    puts redis.mget("user:#{user.id}")
+    puts redis.hgetall("user:#{user.id}")
   when "2"
     movie = Movie.new(
         name: "harry potter",
@@ -38,14 +38,15 @@ ARGV.each do|a|
   when "4"
     Movie.generate_movies(redis)
 
-    list = redis.zrevrange("movies", 0, 9)
+    list = redis.zrange("movies", 0, 9)
     list_keys = list.map { |id| "movie:#{id}" }
 
     for i in 0..list_keys.size
       puts redis.hget(list_keys[i], "title")
     end
   when "5"
+    Comment.generate_comments(redis)
 
-    
+    puts redis.lrange("user_comments_by_movies:2", 0, 2)
   end
 end
