@@ -41,13 +41,12 @@ ARGV.each do|a|
     list = redis.zrange("movies", 0, 9)
     list_keys = list.map { |id| "movie:#{id}" }
 
-    for i in 0..list_keys.size
-      puts redis.hget(list_keys[i], "title")
+    list_keys.each { |key| puts redis.hget(list_keys[i], "title") }
     end
   when "5"
     Comment.generate_comments(redis)
 
-    puts redis.lrange("comments_by_movies:2", 0, 2)
+    puts redis.lrange("movie:2:users", 0, 2)
   when "6"
     list_of_keys = redis.keys("comments_by_movies*")
     puts list_of_keys.length
