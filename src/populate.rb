@@ -1,4 +1,7 @@
 require "redis"
+require "../src/Movie"
+require "../src/User"
+require "../src/Comment"
 
 redis = Redis.new
 
