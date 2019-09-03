@@ -1,6 +1,4 @@
-require "../src/JSONable"
-
-class Comment < JSONable
+class Comment
 
   @@autogeneration = 0
 

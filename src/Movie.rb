@@ -1,6 +1,4 @@
-require "../src/JSONable"
-
-class Movie < JSONable
+class Movie
 
   @@autogeneration = 0
 

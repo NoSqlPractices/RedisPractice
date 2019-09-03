@@ -1,6 +1,4 @@
-require "../src/JSONable"
-
-class User < JSONable
+class User
 
   @@autogeneration = 0
 
