@@ -30,7 +30,8 @@ ARGV.each do|a|
     comment = Comment.new(
         user_id: 0,
         movie_id: 0,
-        text: "Best movie ever"
+        text: "Best movie ever",
+        redis: redis
     )
 
     redis.set("comment:#{comment.id}", comment.to_json)
@@ -47,8 +48,15 @@ ARGV.each do|a|
   when "5"
     Comment.generate_comments(redis)
 
-    puts redis.lrange("user_comments_by_movies:2", 0, 2)
+    puts redis.lrange("comments_by_movies:2", 0, 2)
+  when "6"
+    list_of_keys = redis.keys("comments_by_movies*")
+    list_of_keys = list_of_keys.map {|string| string.partition(":").last }
+
+    puts list_of_keys.length
   when "7"
     puts redis.hget("movie:2", "comments_quantity")
+  when "8"
+    puts redis.smembers("emails")
   end
 end

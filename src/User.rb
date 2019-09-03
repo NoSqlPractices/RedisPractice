@@ -15,8 +15,9 @@ class User < JSONable
 
     redis = attrs.fetch(:redis)
 
-    redis.hmset("user:#{@id}", "name", @title, "surname", @director,
-                "password", @released_date, "mail", @comments_quantity)
+    redis.hmset("user:#{@id}", "name", @name, "surname", @surname,
+                "password", @password, "mail", @mail)
+    redis.sadd("emails", @mail)
 
     @@autogeneration = @@autogeneration + 1
   end
