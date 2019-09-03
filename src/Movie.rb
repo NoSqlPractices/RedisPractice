@@ -13,9 +13,11 @@ class Movie
 
     redis = attrs.fetch(:redis)
 
-    redis.hmset("movie:#{@id}", "title", @title, "director", @director,
-                "released_date", @released_date, "comments_quantity", @comments_quantity)
-    redis.zadd("movies", @released_date, @id)
+    redis.multi do
+      redis.hmset("movie:#{@id}", "title", @title, "director", @director,
+                  "released_date", @released_date, "comments_quantity", @comments_quantity)
+      redis.zadd("movies", @released_date, @id)
+    end
 
     @@autogeneration = @@autogeneration + 1
   end
