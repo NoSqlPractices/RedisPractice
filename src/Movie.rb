@@ -16,7 +16,7 @@ class Movie
     redis.multi do
       redis.hmset("movie:#{@id}", "title", @title, "director", @director,
                   "released_date", @released_date, "comments_quantity", @comments_quantity)
-      redis.zadd("movie:titleByReleasedDate", @released_date, @title)
+      redis.zadd("movies:titleByReleasedDate", @released_date, @title)
     end
 
     @@autogeneration = @@autogeneration + 1

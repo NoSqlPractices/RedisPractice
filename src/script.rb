@@ -35,7 +35,7 @@ ARGV.each do |a|
 
     puts redis.hgetall("comment:#{comment.id}")
   when "4"
-    puts redis.zrange("movie:titleByReleasedDate", 0, 9)
+    puts redis.zrange("movies:titleByReleasedDate", 0, 9)
   when "5"
     puts redis.lrange("comments:movie:2:users", 0, 2)
   when "6"
