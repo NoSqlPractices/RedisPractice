@@ -50,8 +50,6 @@ ARGV.each do|a|
     puts redis.lrange("comments_by_movies:2", 0, 2)
   when "6"
     list_of_keys = redis.keys("comments_by_movies*")
-    list_of_keys = list_of_keys.map {|string| string.partition(":").last }
-
     puts list_of_keys.length
   when "7"
     puts redis.hget("movie:2", "comments_quantity")
