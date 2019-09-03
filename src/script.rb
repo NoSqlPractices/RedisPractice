@@ -49,8 +49,7 @@ ARGV.each do|a|
 
     puts redis.lrange("movie:2:users", 0, 2)
   when "6"
-    list_of_keys = redis.keys("comments_by_movies*")
-    puts list_of_keys.length
+    puts redis.scard("movies_with_comments")
   when "7"
     puts redis.hget("movie:2", "comments_quantity")
   when "8"
