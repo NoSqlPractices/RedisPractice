@@ -1,3 +1,121 @@
+# Cargado de datos implementando el modelo (populate.rb)
+
+## Creacion de usuarios
+
+    MULTI
+    HMSET user:0 name "pablo" surname "fernandez" password "password" mail "pablo@gmail.com" 
+    SADD users:emails "pablo@gmail.com"
+    EXEC
+    
+    MULTI
+    HMSET user:1 name "pepe" surname "grillo" password "password" mail "ppgrillo@gmail.com" 
+    SADD users:emails "ppgrillo@gmail.com"
+    EXEC
+    
+## Creacion Peliculas
+
+    MULTI
+    HMSET movie:0 title "harry potter" director "john" released_date 20190813 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20190813 "harry potter"
+    EXEC
+    
+    MULTI
+    HMSET movie:1 title "el señor de los anillos" director "wick" released_date 20190816 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20190816 "el señor de los anillos"
+    EXEC
+    
+    MULTI
+    HMSET movie:2 title "la bella durmiente" director "disney" released_date 20190819 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20190819 "la bella durmiente"
+    EXEC
+    
+    MULTI
+    HMSET movie:3 title "la bella y la bestia" director "disney" released_date 20190916 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20190916 "la bella y la bestia"
+    EXEC
+    
+    MULTI
+    HMSET movie:4 title "la sirenita" director "disney" released_date 20161016 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20161016 "la sirenita"
+    EXEC
+    
+    MULTI
+    HMSET movie:5 title "la cenicienta" director "disney" released_date 20150314 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20150314 "la cenicienta"
+    EXEC
+    
+    MULTI
+    HMSET movie:6 title "crepusculo" director "someone" released_date 20080416 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20080416 "crepusculo"
+    EXEC
+    
+    MULTI
+    HMSET movie:7 title "pulp fiction" director "anotherone" released_date 20140416 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20140416 "pulp fiction"
+    EXEC
+    
+    MULTI
+    HMSET movie:8 title "volver al futuro" director "martymcfly" released_date 19890816 comments_quantity 0
+    ZADD movies:titleByReleasedDate 19890816 "volver al futuro"
+    EXEC
+    
+    MULTI
+    HMSET movie:9 title "terminator" director "rambo" released_date 20180413 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20180413 "terminator"
+    EXEC
+    
+    MULTI
+    HMSET movie:10 title "rapido y furioso" director "dominic" released_date 20140128 comments_quantity 0
+    ZADD movies:titleByReleasedDate 20140128 "rapido y furioso"
+    EXEC
+
+
+## Creacion Comentarios
+
+    MULTI
+    HMSET comment:0 movie_id 2 user_id 0 text "awesome"
+    LPUSH comments:movie:2:users 0
+    SADD comments:movies 2
+    HINCRBY movie:2 comments_quantity 1
+    EXEC
+   
+    MULTI
+    HMSET comment:1 movie_id 2 user_id 1 text "more awesome"
+    LPUSH comments:movie:2:users 1
+    SADD comments:movies 2
+    HINCRBY movie:2 comments_quantity 1
+    EXEC
+    
+    MULTI
+    HMSET comment:2 movie_id 4 user_id 0 text "bad"
+    LPUSH comments:movie:4:users 0
+    SADD comments:movies 4
+    HINCRBY movie:4 comments_quantity 1
+    EXEC
+    
+    MULTI
+    HMSET comment:3 movie_id 2 user_id 1 text "kind of"
+    LPUSH comments:movie:2:users 1
+    SADD comments:movies 2
+    HINCRBY movie:2 comments_quantity 1
+    EXEC
+    
+    MULTI
+    HMSET comment:4 movie_id 2 user_id 0 text "again awesome"
+    LPUSH comments:movie:2:users 0
+    SADD comments:movies 2
+    HINCRBY movie:2 comments_quantity 1
+    EXEC
+    
+    MULTI
+    HMSET comment:5 movie_id 2 user_id 1 text "super again awesome"
+    LPUSH comments:movie:2:users 1
+    SADD comments:movies 2
+    HINCRBY movie:2 comments_quantity 1
+    EXEC
+
+# Listado de comandos para satisfacer requerimientos (script.rb con argumento del numero de ejercicio)
+
 I.On Create User
     MULTI
     HMSET user:1 name "john" surname "johnson" password "arbol" mail "john@gmail.com" 
