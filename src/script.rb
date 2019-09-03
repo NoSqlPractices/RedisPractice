@@ -35,19 +35,14 @@ ARGV.each do |a|
 
     puts redis.hgetall("comment:#{comment.id}")
   when "4"
-    list = redis.zrange("movies", 0, 9)
-    list_keys = list.map {|id| "movie:#{id}"}
-
-    for i in 0..list_keys.length
-      puts redis.hget(list_keys[i], "title")
-    end
+    puts redis.zrange("movie:titleByReleasedDate", 0, 9)
   when "5"
-    puts redis.lrange("movie:2:users", 0, 2)
+    puts redis.lrange("comments:movie:2:users", 0, 2)
   when "6"
-    puts redis.scard("movies_with_comments")
+    puts redis.scard("comments:movies")
   when "7"
     puts redis.hget("movie:2", "comments_quantity")
   when "8"
-    puts redis.smembers("emails")
+    puts redis.smembers("users:emails")
   end
 end

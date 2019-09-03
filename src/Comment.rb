@@ -14,8 +14,8 @@ class Comment
 
     redis.multi do
       redis.hmset("comment:#{@id}", "movie_id", @movie_id, "user_id", @user_id, "text", @text)
-      redis.lpush("movie:#{@movie_id}:users", @user_id)
-      redis.sadd("movies_with_comments", @movie_id)
+      redis.lpush("comments:movie:#{@movie_id}:users", @user_id)
+      redis.sadd("comments:movies", @movie_id)
       redis.hincrby("movie:#{@movie_id}", "comments_quantity", 1)
     end
 

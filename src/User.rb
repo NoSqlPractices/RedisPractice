@@ -16,7 +16,7 @@ class User
     redis.multi do
       redis.hmset("user:#{@id}", "name", @name, "surname", @surname,
                   "password", @password, "mail", @mail)
-      redis.sadd("emails", @mail)
+      redis.sadd("users:emails", @mail)
     end
 
     @@autogeneration = @@autogeneration + 1

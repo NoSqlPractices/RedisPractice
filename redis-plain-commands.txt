@@ -1,21 +1,21 @@
 I.On Create User
     MULTI
-    HMSET users:1 name "Terminator1" password: "password"
-    SADD users:emails "user@email.com"
+    HMSET user:1 name "john" surname "johnson" password "arbol" mail "john@gmail.com" 
+    SADD users:emails "john@gmail.com"
     EXEC
 
 II.On Create Movie
     MULTI
-    HMSET movies:1 name "Terminator1" comments_count 0
-    ZADD movies:release_date 1389772800 "1"
+    HMSET movie:1 title "Terminator1" director "james cameron" released_date 19841026 comments_quantity 0
+    ZADD movies_by_release 19841026 "Terminator1"
     EXEC
 
 III.On Create Comment
     MULTI
-    HMSET comments:1 name "text" user_id 1 movie_id 1
-    LPUSH movies:1:users 1
-    SADD comments:movies 1
-    HINCRBY movies:1 comments_count 1
+    HMSET comment:1 user_id 1 movie_id 1 text "awesome"
+    LPUSH movie:1:users_comments 1
+    SADD movies_with_comments 1
+    HINCRBY movie:1 comments_quantity 1
     EXEC
 
 IV. Conocer los títulos de las 10 películas más viejas.
@@ -25,7 +25,7 @@ IV. Conocer los títulos de las 10 películas más viejas.
 V. Conocer los ids de los últimos 3 usuarios que comentaron una película (puede ser el
 mismo varias veces, no tienen que ser usuarios diferentes).
 
-    LRANGE movies:1:users 0 2
+    LRANGE movie:1:users 0 2
 
 VI. Conocer la cantidad de películas que tienen al menos un comentario.
 
