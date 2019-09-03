@@ -34,8 +34,7 @@ ARGV.each do|a|
         redis: redis
     )
 
-    redis.set("comment:#{comment.id}", comment.to_json)
-    puts redis.mget("comment:#{comment.id}")
+    puts redis.hgetall("comment:#{comment.id}")
   when "4"
     Movie.generate_movies(redis)
 
